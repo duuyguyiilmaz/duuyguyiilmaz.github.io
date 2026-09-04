@@ -1,1 +1,287 @@
 @import "tailwindcss";
+
+@import "@fontsource-variable/geist/index.css";
+@import "@fontsource-variable/geist-mono/index.css";
+
+/*
+ * Palette: #F1ECE6 cream, #DDD5CD taupe, #7D4047 wine, #2E2E2E graphite.
+ *
+ * Glass has no colour of its own - it borrows from whatever sits behind it. So
+ * the cream and taupe become the ground, the wine becomes the accent that shows
+ * through it, and the glass layers stay near-neutral so the ground reads through.
+ *
+ * The whole palette is warm. A cool slate was tried in the ground washes and
+ * pulled against the cream and the wine, so the washes are thinned wine again:
+ * depth that belongs to the same family as everything else.
+ *
+ * One accent for the whole site. One radius system: full-pill for anything you
+ * can press, 1.75rem for surfaces, 0 for hairline rules. Nothing else.
+ *
+ * THEMING: the light values live on :root and the dark ones on
+ * :root[data-theme="dark"]. Nothing here reads prefers-color-scheme directly -
+ * the inline script in index.html resolves the system preference and writes the
+ * attribute before first paint, so one selector covers both the automatic and
+ * the manually chosen case.
+ */
+@theme {
+  --font-sans: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-cream: #f1ece6;
+  --color-taupe: #ddd5cd;
+  --color-wine: #7d4047;
+  --color-graphite: #2e2e2e;
+  /* Warm off-black. Not #000: pure black flattens the glass shadows. */
+  --color-ink: #14110f;
+
+  --color-label: #2e2e2e;
+  --color-label-secondary: rgba(46, 46, 46, 0.62);
+  --color-label-tertiary: rgba(46, 46, 46, 0.42);
+  --color-accent: #7d4047;
+  --color-on-accent: #f1ece6;
+  --color-separator: rgba(46, 46, 46, 0.12);
+  --color-fill: rgba(46, 46, 46, 0.06);
+
+  /* Surface behind the glass when transparency is turned off. */
+  --color-surface: #f1ece6;
+
+  /* The glass itself. */
+  --glass-tint: rgba(255, 255, 255, 0.42);
+  --glass-tint-strong: rgba(255, 255, 255, 0.55);
+  --glass-edge: rgba(255, 255, 255, 0.55);
+  --glass-specular: rgba(255, 255, 255, 0.75);
+  --glass-shadow: rgba(46, 46, 46, 0.14);
+}
+
+:root[data-theme="dark"] {
+  --color-label: #f1ece6;
+  --color-label-secondary: rgba(241, 236, 230, 0.6);
+  --color-label-tertiary: rgba(241, 236, 230, 0.4);
+  /* The wine is too dark to read on near-black, so it lifts toward the cream. */
+  --color-accent: #d09aa1;
+  --color-on-accent: #241012;
+  --color-separator: rgba(241, 236, 230, 0.14);
+  --color-fill: rgba(241, 236, 230, 0.08);
+
+  --color-surface: #1d1917;
+
+  --glass-tint: rgba(241, 236, 230, 0.06);
+  --glass-tint-strong: rgba(241, 236, 230, 0.09);
+  --glass-edge: rgba(241, 236, 230, 0.14);
+  --glass-specular: rgba(241, 236, 230, 0.2);
+  --glass-shadow: rgba(0, 0, 0, 0.55);
+}
+
+/*
+ * The ground the glass refracts. Fixed, so scrolling moves content across it
+ * and the colour behind each panel changes as you go - that shift is what makes
+ * the material read as glass rather than as a grey box. It does not animate on
+ * its own; a drifting full-viewport background is exactly what reduced-motion
+ * users are protected from.
+ */
+@utility ground {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(58% 46% at 12% 6%, rgba(125, 64, 71, 0.18), transparent 62%),
+    radial-gradient(52% 48% at 88% 14%, rgba(221, 213, 205, 0.95), transparent 66%),
+    radial-gradient(46% 42% at 80% 74%, rgba(125, 64, 71, 0.14), transparent 62%),
+    radial-gradient(60% 50% at 22% 94%, rgba(221, 213, 205, 0.85), transparent 65%);
+}
+
+:root[data-theme="dark"] .ground {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(58% 46% at 12% 6%, rgba(125, 64, 71, 0.4), transparent 62%),
+    radial-gradient(52% 48% at 88% 14%, rgba(46, 46, 46, 0.9), transparent 66%),
+    radial-gradient(46% 42% at 80% 74%, rgba(125, 64, 71, 0.28), transparent 62%),
+    radial-gradient(60% 50% at 22% 94%, rgba(46, 46, 46, 0.85), transparent 65%);
+}
+
+/*
+ * Grain sits on the fixed ground layer only. Never on a scrolling container -
+ * a repainting noise filter is what kills mobile frame rate.
+ */
+@utility ground-grain {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="dark"] .ground-grain {
+  opacity: 0.05;
+}
+
+/*
+ * Featured surfaces take a wash of the accent so the grid is not five identical
+ * panes. It is the same wine as everything else, just thinned until it reads as
+ * a tint of the ground rather than as a second colour.
+ */
+@utility card-wash {
+  background-image:
+    radial-gradient(120% 90% at 0% 0%, rgba(125, 64, 71, 0.14), transparent 58%),
+    radial-gradient(90% 80% at 100% 100%, rgba(221, 213, 205, 0.5), transparent 62%);
+}
+
+:root[data-theme="dark"] .card-wash {
+  background-image:
+    radial-gradient(120% 90% at 0% 0%, rgba(208, 154, 161, 0.16), transparent 58%),
+    radial-gradient(90% 80% at 100% 100%, rgba(241, 236, 230, 0.05), transparent 62%);
+}
+
+/*
+ * A pane of glass: it blurs and saturates what's behind it, catches a specular
+ * highlight along its top edge, and casts a shadow to sit above the ground.
+ */
+@utility glass {
+  background-color: var(--glass-tint);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid var(--glass-edge);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-specular),
+    0 6px 24px -10px var(--glass-shadow);
+}
+
+/* Bigger surfaces read as thicker: more blur, a deeper shadow. */
+@utility glass-thick {
+  background-color: var(--glass-tint-strong);
+  backdrop-filter: blur(32px) saturate(190%);
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  border: 1px solid var(--glass-edge);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-specular),
+    0 16px 44px -16px var(--glass-shadow);
+}
+
+/* Legibility wins over the effect: frost the glass when the user asks. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-thick {
+    background-color: var(--color-surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .ground-grain {
+    display: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .glass,
+  .glass-thick {
+    background-color: var(--color-surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: var(--color-label);
+  }
+
+  .ground-grain {
+    display: none;
+  }
+}
+
+/*
+ * The z-index scale, in full. Three layers is all this site has, and writing
+ * them down here is what stops the next change from reaching for z-9999.
+ *   -10  the fixed ground behind everything
+ *     0  page content
+ *    20  the floating nav, and the skip link that has to clear it
+ */
+
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+}
+
+body {
+  /* Matches the ground so overscroll doesn't flash white past the edges. */
+  background-color: var(--color-cream);
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root[data-theme="dark"] body {
+  background-color: var(--color-ink);
+}
+
+/*
+ * Headlines balance across their lines instead of dropping one word onto a
+ * line of its own; body copy only avoids the orphan on its last line, which is
+ * the cheaper of the two algorithms and the right one for long text.
+ */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
+/* Keyboard focus is never removed, only made to match the accent. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Tracking is size-specific: large text needs it tightened, body sits near zero. */
+@utility text-display {
+  font-size: clamp(2.5rem, 7.5vw, 4.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  font-weight: 560;
+}
+
+@utility text-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  font-weight: 560;
+}
+
+@utility text-heading {
+  font-size: 1.3125rem;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  font-weight: 550;
+}
+
+@utility text-body-lg {
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  letter-spacing: -0.002em;
+}
+
+/*
+ * Vibrancy: text over a translucent surface needs more weight and a touch more
+ * tracking than text on a solid one, or it dissolves into the blur.
+ */
+@utility text-caption {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+
+/* Metadata that should line up in a column: years, periods, counts. */
+@utility text-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
