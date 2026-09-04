@@ -1,11 +1,51 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Duygu Yılmaz</title>
-    <meta name="description" content="Duygu Yılmaz — bilgisayar mühendisliği öğrencisi, portföy sitesi." />
+    <title>Duygu Yılmaz, computer engineering student</title>
+    <meta
+      name="description"
+      content="Portfolio of Duygu Yılmaz, a computer engineering student working across algorithms, systems and embedded development."
+    />
+    <meta property="og:title" content="Duygu Yılmaz, computer engineering student" />
+    <meta
+      property="og:description"
+      content="Algorithms and data structures, coursework turned into projects that run, and a move toward embedded systems."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://duuyguyiilmaz.github.io/" />
+    <!-- Absolute URL: link scrapers do not resolve relative paths. -->
+    <meta property="og:image" content="https://duuyguyiilmaz.github.io/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Duygu Yılmaz, computer engineering student" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- No media attribute: the value is kept in step with the resolved theme, including a manual override. -->
+    <meta id="theme-color" name="theme-color" content="#f1ece6" />
+
+    <!--
+      Runs before the first paint, so the page never renders in the wrong theme
+      and then snaps. Stores "system" | "light" | "dark"; "system" resolves here
+      against the OS setting. Kept inline and dependency-free on purpose: a
+      module import would arrive too late to prevent the flash.
+    -->
+    <script>
+      (function () {
+        var dark = false
+        try {
+          var stored = localStorage.getItem('theme')
+          dark =
+            stored === 'dark' ||
+            (stored !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)
+        } catch (error) {
+          /* Private mode can throw on localStorage. Light is the safe default. */
+        }
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+        document.getElementById('theme-color').content = dark ? '#14110f' : '#f1ece6'
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>
