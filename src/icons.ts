@@ -15,5 +15,6 @@ export { EnvelopeSimple } from '@phosphor-icons/react/dist/icons/EnvelopeSimple'
 export { Sun } from '@phosphor-icons/react/dist/icons/Sun'
 export { Moon } from '@phosphor-icons/react/dist/icons/Moon'
 export { Monitor } from '@phosphor-icons/react/dist/icons/Monitor'
+export { default as LeetCodeLogo } from './components/LeetCodeLogo'
 
 export const ICON_WEIGHT = 'regular' as const

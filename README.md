@@ -1,32 +1,24 @@
-# React + TypeScript + Vite
+﻿# Duygu Yılmaz — Personal Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+My personal portfolio website, featuring my projects, experience, and technical skills as a Computer Engineering student at Akdeniz University.
 
-Currently, two official plugins are available:
+**Website:** [duuyguyiilmaz.github.io](https://duuyguyiilmaz.github.io/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- About, Projects, and Experience pages
+- English and Turkish language support
+- Light, dark, and system theme options
+- Responsive layouts for desktop and mobile
+- Interactive project screenshot galleries
+- Links to my GitHub, LinkedIn, LeetCode, and email
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Built With
 
-## Expanding the Oxlint configuration
+React, TypeScript, Vite, Tailwind CSS, Motion, and Phosphor Icons.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Deployed to GitHub Pages through GitHub Actions.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+## Contributions
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+This is my personal portfolio, maintained by me. I am not accepting external contributions or pull requests.

@@ -113,7 +113,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
         </div>
 
-        {project.shots && project.shape && (
+        {project.shots && project.shots.length > 0 && project.shape && (
           <ProjectShot shots={project.shots} shape={project.shape} label={project.title} />
         )}
       </div>

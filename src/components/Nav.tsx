@@ -95,23 +95,7 @@ function LanguageControl() {
   )
 }
 
-/**
- * The portrait stands in for the wordmark. At this size a face is read faster
- * than a name, and it costs a fraction of the row - so unlike the wordmark it
- * stays on at phone widths too.
- *
- * 32px is the tallest thing the row already contains (a nav pill is 14px of
- * text plus its padding), so the plate is as large as it can be without the
- * bar growing around it.
- *
- * On hover it lifts, the way the avatar-group component does, but by 3px
- * rather than the published 10: this sits inside a 48px bar, and a plate that
- * jumps out of its own row reads as a glitch. No label - the name is on the
- * page it leads to, and `aria-label` still says it for a screen reader.
- *
- * Until a file is dropped at public/avatar.png the plate holds its place empty
- * rather than showing a broken-image icon.
- */
+/** Profile image linking to About; hide a failed image and keep its background. */
 function Portrait() {
   const reduced = useReducedMotion()
   const [ok, setOk] = useState(true)
@@ -141,14 +125,7 @@ function Portrait() {
   )
 }
 
-/**
- * A floating pane rather than a bar pinned to the window edge - content passes
- * underneath it, and the ground shifting behind the glass as you scroll is what
- * makes it read as a material.
- *
- * It has to stay on one line at every width, so below `sm` the wordmark drops
- * to initials rather than letting the row wrap.
- */
+/** Fixed navigation with page links, account shortcuts, language and theme controls. */
 export default function Nav({ route }: { route: string }) {
   const { t } = useLang()
 
@@ -157,12 +134,7 @@ export default function Nav({ route }: { route: string }) {
       <nav className="glass mx-auto flex max-w-3xl items-center justify-between gap-1 rounded-full py-2 pr-1.5 pl-3 sm:gap-3 sm:pr-2 sm:pl-5">
         <Portrait />
 
-        {/*
-         * Fills the gap the wordmark used to leave. Hidden below md: measured at
-         * 640px the row overflows by a few pixels with the dock in it, and a nav
-         * that wraps to two lines is worse than one without shortcuts. Below
-         * that width the footer carries the same accounts.
-         */}
+        {/* Hide account shortcuts below md to keep the navigation on one line. */}
         <AccountDock className="hidden md:flex" />
 
         <div className="flex min-w-0 items-center gap-1 sm:gap-2">

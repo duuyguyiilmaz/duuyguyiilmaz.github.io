@@ -54,9 +54,6 @@ export const pages = [
  * first group wears the darkest wine, the last the lightest. Four `tone`
  * classes are defined in index.css - keep this list to four groups, or add a
  * `.tone-5` there before adding a fifth here.
- *
- * TODO (Duygu): the lists are still short. Adding to `items` is all it takes -
- * the row wraps on its own.
  */
 export const skillGroups = [
   {

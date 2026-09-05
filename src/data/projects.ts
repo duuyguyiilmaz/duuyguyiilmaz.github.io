@@ -5,8 +5,6 @@ export type Project = {
   slug: string
   year: number
   repo: string
-  /** Optional live demo; omit if there is none. */
-  demo?: string
   tags: string[]
   /**
    * Square logo under `public/projects/`, referenced by URL rather than
@@ -26,7 +24,7 @@ export type Project = {
   shape?: 'phone' | 'window'
   title: string
   summary: Localized
-  /** Shown first, above the rest of the list. */
+  /** Uses emphasized card styling and larger text. */
   featured?: boolean
 }
 

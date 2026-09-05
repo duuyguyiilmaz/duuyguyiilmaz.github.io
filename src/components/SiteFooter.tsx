@@ -1,15 +1,7 @@
 import { useLang } from '../lang'
 import { person, ui } from '../data/site'
 
-/**
- * Contact used to be a full block here with a heading and a filled button. The
- * nav dock already carries the same four accounts, so the button was the second
- * ask on the page for the same thing and it went.
- *
- * What stays is the part the icons cannot say: that I am looking for work. The
- * address stays too, spelled out rather than hidden behind an envelope, because
- * below 768px the dock is hidden and this is the only place it appears.
- */
+/** Contact details and account links, also available when the nav dock is hidden. */
 export default function SiteFooter() {
   const { t } = useLang()
 

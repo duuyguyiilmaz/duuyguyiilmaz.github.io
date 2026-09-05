@@ -3,8 +3,12 @@ import type { Lang } from './data/site'
 import { DEFAULT_LANG, LanguageContext, STORAGE_KEY } from './lang'
 
 function storedLang(): Lang {
-  const stored = localStorage.getItem(STORAGE_KEY)
-  return stored === 'tr' || stored === 'en' ? stored : DEFAULT_LANG
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    return stored === 'tr' || stored === 'en' ? stored : DEFAULT_LANG
+  } catch {
+    return DEFAULT_LANG
+  }
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -16,7 +20,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   function setLang(next: Lang) {
     setLangState(next)
-    localStorage.setItem(STORAGE_KEY, next)
+    try {
+      localStorage.setItem(STORAGE_KEY, next)
+    } catch {
+      // The language still changes for this visit when storage is unavailable.
+    }
   }
 
   return (

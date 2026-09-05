@@ -10,22 +10,7 @@ type PressableLinkProps = {
   className?: string
 }
 
-/**
- * The secondary button, used in the footer and on the not-found page. The hero
- * has its own larger one in HeroCta; there was a `secondary` and a `quiet`
- * variant here too, and both went unused once the hero dropped to a single
- * call to action.
- *
- * Accent-filled: cream on wine measures about 6.9:1 in light and the lifted
- * wine carries about 4.8:1 in dark, so the label stays readable in both without
- * a second accent entering the palette.
- *
- * Feedback fires on pointer-down (whileTap), not on click - waiting for release
- * to acknowledge a press is what makes an interface feel dead.
- *
- * Labels never wrap: a CTA that breaks onto a second line reads as a layout
- * bug, so keep them to two or three words.
- */
+/** Button-styled link with press feedback, used on the not-found page. */
 export default function PressableLink({
   href,
   children,

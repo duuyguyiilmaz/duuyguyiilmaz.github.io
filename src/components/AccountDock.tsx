@@ -11,16 +11,10 @@ import {
 import { useRef, useState, type ReactNode } from 'react'
 import { useLang } from '../lang'
 import { person, ui } from '../data/site'
-import { EnvelopeSimple, GithubLogo, ICON_WEIGHT, LinkedinLogo } from '../icons'
+import { EnvelopeSimple, GithubLogo, ICON_WEIGHT, LeetCodeLogo, LinkedinLogo } from '../icons'
 import { tick } from '../sound'
-import LeetCodeLogo from './LeetCodeLogo'
 
-/*
- * A macOS-dock magnifier, sized for a 50px navigation pill rather than for the
- * bottom of the screen. The published component grows its panel to 128px on
- * hover, which is taller than this whole nav; here the row height is fixed and
- * only the icons themselves swell, so the bar never reflows.
- */
+/* Icons grow near the cursor while the navigation row keeps a fixed height. */
 const RESTING = 22
 const MAGNIFIED = 32
 /** How far from an icon the cursor still lifts it. */
@@ -93,11 +87,7 @@ function AccountItem({
         {account.icon}
       </motion.span>
 
-      {/*
-       * The label hangs below the icon. The published component puts it above,
-       * which here would place it off the top of the window: the nav is already
-       * pinned to it.
-       */}
+      {/* Labels appear below the icons to stay within the viewport. */}
       <AnimatePresence>
         {labelShown && (
           <motion.span
