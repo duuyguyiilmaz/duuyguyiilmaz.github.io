@@ -39,7 +39,7 @@ function ThemeControl() {
       title={`${t(ui.themeLabel)}: ${t(themeNames[choice])}`}
       whileTap={{ scale: 0.9 }}
       transition={springs.press}
-      className="relative grid size-7 shrink-0 place-items-center rounded-full text-label-secondary transition-colors hover:bg-fill hover:text-label"
+      className="relative grid size-11 md:size-7 shrink-0 place-items-center rounded-full text-label-secondary transition-colors hover:bg-fill hover:text-label"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
@@ -66,6 +66,14 @@ function LanguageControl() {
 
   return (
     <div className="flex shrink-0 rounded-full bg-fill p-0.5">
+      <button
+        type="button"
+        onClick={() => setLang(lang === 'en' ? 'tr' : 'en')}
+        aria-label={lang === 'en' ? 'Switch to Turkish' : '?ngilizceye ge?'}
+        className="grid size-11 place-items-center rounded-full text-sm font-medium uppercase md:hidden"
+      >
+        {lang}
+      </button>
       {languages.map((option) => {
         const selected = option === lang
         return (
@@ -76,7 +84,7 @@ function LanguageControl() {
             aria-pressed={selected}
             whileTap={{ scale: 0.94 }}
             transition={springs.press}
-            className="text-caption relative rounded-full px-2 py-1 uppercase sm:px-2.5"
+            className="text-caption relative hidden rounded-full px-2.5 py-1 uppercase md:block"
           >
             {selected && (
               <motion.span
@@ -108,7 +116,7 @@ function Portrait() {
       whileTap={{ scale: 0.94 }}
       transition={springs.press}
       /* No ring of ours: the artwork draws its own, and two would be a seam. */
-      className="relative size-8 shrink-0 rounded-full bg-fill"
+      className="relative size-11 md:size-8 shrink-0 rounded-full bg-fill"
     >
       {ok && (
         <img
@@ -131,14 +139,10 @@ export default function Nav({ route }: { route: string }) {
 
   return (
     <header className="fixed inset-x-0 top-3 z-20 px-3 sm:top-4 sm:px-6">
-      <nav className="glass mx-auto flex max-w-3xl items-center justify-between gap-1 rounded-full py-2 pr-1.5 pl-3 sm:gap-3 sm:pr-2 sm:pl-5">
+      <nav className="glass mx-auto grid max-w-3xl grid-cols-[auto_1fr_auto] items-center gap-x-1 gap-y-2 rounded-3xl p-2 md:flex md:justify-between md:gap-3 md:rounded-full md:py-2 md:pr-2 md:pl-5">
         <Portrait />
 
-        {/* Hide account shortcuts below md to keep the navigation on one line. */}
-        <AccountDock className="hidden md:flex" />
-
-        <div className="flex min-w-0 items-center gap-1 sm:gap-2">
-          <ul className="flex items-center gap-0.5">
+        <ul className="col-span-2 flex min-w-0 items-center justify-end gap-0.5 md:order-2">
             {pages.map((page) => {
               const selected = route === page.id
               return (
@@ -148,7 +152,7 @@ export default function Nav({ route }: { route: string }) {
                     aria-current={selected ? 'page' : undefined}
                     whileTap={{ scale: 0.96 }}
                     transition={springs.press}
-                    className={`relative block rounded-full px-2 py-1.5 text-sm whitespace-nowrap transition-colors sm:px-3 ${
+                    className={`relative flex min-h-11 items-center justify-center rounded-full px-2 text-sm whitespace-nowrap transition-colors md:min-h-0 md:px-3 md:py-1.5 ${
                       selected ? 'text-label' : 'text-label-secondary hover:text-label'
                     }`}
                   >
@@ -164,7 +168,9 @@ export default function Nav({ route }: { route: string }) {
                 </li>
               )
             })}
-          </ul>
+        </ul>
+        <AccountDock className="col-span-2 md:order-1" />
+        <div className="flex items-center justify-end gap-0.5 md:order-3 md:gap-2">
           <LanguageControl />
           <ThemeControl />
         </div>

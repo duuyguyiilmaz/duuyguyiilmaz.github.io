@@ -69,7 +69,7 @@ function Site() {
          * the browser scrolls but leaves focus on <body>, and the next Tab goes
          * straight back to the nav the visitor just asked to skip.
          */}
-        <main id="content" tabIndex={-1} className="pt-24 sm:pt-24">
+        <main id="content" tabIndex={-1} className="pt-36 md:pt-24">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={route}

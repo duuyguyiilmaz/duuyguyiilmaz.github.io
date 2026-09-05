@@ -78,7 +78,7 @@ function AccountItem({
       onMouseLeave={() => setLabelShown(false)}
       onFocus={() => setLabelShown(true)}
       onBlur={() => setLabelShown(false)}
-      className="relative flex h-8 items-center justify-center px-0.5 text-label-secondary transition-colors hover:text-label focus-visible:text-label"
+      className="relative flex h-11 min-w-11 items-center justify-center px-0.5 md:h-8 md:min-w-0 text-label-secondary transition-colors hover:text-label focus-visible:text-label"
     >
       <motion.span
         className="flex items-center justify-center"
