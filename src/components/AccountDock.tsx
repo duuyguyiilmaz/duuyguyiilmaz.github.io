@@ -12,6 +12,7 @@ import { useRef, useState, type ReactNode } from 'react'
 import { useLang } from '../lang'
 import { person, ui } from '../data/site'
 import { EnvelopeSimple, GithubLogo, ICON_WEIGHT, LinkedinLogo } from '../icons'
+import { tick } from '../sound'
 import LeetCodeLogo from './LeetCodeLogo'
 
 /*
@@ -72,6 +73,13 @@ function AccountItem({
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
       aria-label={account.label}
+      /*
+       * One tick as the cursor arrives on this icon, so sweeping the dock
+       * sounds like passing over detents. Mouse only: on a touchscreen this
+       * fires on the tap that follows the link, which would be a click sound
+       * for leaving the page. Nothing plays once the cursor is off the dock.
+       */
+      onPointerEnter={(event) => event.pointerType === 'mouse' && tick()}
       onMouseEnter={() => setLabelShown(true)}
       onMouseLeave={() => setLabelShown(false)}
       onFocus={() => setLabelShown(true)}

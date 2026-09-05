@@ -8,6 +8,22 @@ export type Project = {
   /** Optional live demo; omit if there is none. */
   demo?: string
   tags: string[]
+  /**
+   * Square logo under `public/projects/`, referenced by URL rather than
+   * imported: these are the projects' own marks, not this site's artwork, and
+   * keeping them out of the bundle means swapping one is dropping in a file.
+   * Omit it and the card simply has no plate.
+   */
+  logo?: string
+  /**
+   * Screenshots of the thing running, under `public/projects/`. They sit on a
+   * carousel the reader moves themselves, in this order, so it is worth putting
+   * them in the order someone would meet the app. `shape` picks the frame and
+   * the shot's proportions: a phone gets a device outline, a web app a rounded
+   * pane. Omit `shots` and the project keeps the text-only layout.
+   */
+  shots?: string[]
+  shape?: 'phone' | 'window'
   title: string
   summary: Localized
   /** Shown first, above the rest of the list. */
@@ -15,68 +31,61 @@ export type Project = {
 }
 
 /**
- * Add a project by appending an object here. The Projects page renders whatever
- * is in this array, featured first and then newest first.
+ * Add a project by appending an object here. The Projects page renders this
+ * array in order, one full-width card each - so the order below is the order
+ * on the page.
  *
- * The grid shapes itself around the count, so it never leaves an empty cell:
- * featured entries take the full width, the rest fall into pairs.
+ * `summary` says what the project does and what it is for. The stack belongs
+ * in `tags` and in the repo; a paragraph of technology names tells a reader
+ * nothing about the project that the README does not tell them better.
  */
 export const projects: Project[] = [
-  {
-    slug: 'campusnote',
-    year: 2026,
-    repo: 'https://github.com/duuyguyiilmaz/CampusNote',
-    tags: ['Kotlin', 'Android', 'Firebase', 'Firestore'],
-    title: 'CampusNote',
-    featured: true,
-    summary: {
-      en: 'An Android app for sharing lecture notes within a university department, built around contribution fairness: the department feed stays locked until you upload a note of your own. Firebase Auth for accounts, Firestore security rules to enforce the rule server-side.',
-      tr: 'Üniversite bölümü içinde ders notu paylaşmak için bir Android uygulaması. Katkı adaleti üzerine kurulu: kendi notunu yüklemeden bölüm akışı açılmıyor. Hesaplar için Firebase Auth, kuralı sunucu tarafında zorlamak için Firestore güvenlik kuralları.',
-    },
-  },
   {
     slug: 'pusulai',
     year: 2026,
     repo: 'https://github.com/mertosmanayhan/PusulAI',
     tags: ['.NET 9', 'React', 'PostgreSQL', 'Redis', 'Docker'],
+    logo: '/projects/pusulai.png',
+    /* Chat driving a flight search, then hotels, plans, reservations, admin. */
+    shots: [
+      '/projects/pusulai-1.webp',
+      '/projects/pusulai-2.webp',
+      '/projects/pusulai-3.webp',
+      '/projects/pusulai-4.webp',
+      '/projects/pusulai-5.webp',
+    ],
+    shape: 'window',
     title: 'PusulAI',
     featured: true,
     summary: {
-      en: 'A team project: a travel assistant that turns natural-language requests into hotel and flight searches, with card payments and AI-assisted trip planning. .NET backend, React frontend, PostgreSQL and Redis behind Docker Compose.',
-      tr: 'Bir ekip projesi: doğal dildeki istekleri otel ve uçak aramalarına çeviren, kart ödemeli rezervasyon ve yapay zekâ destekli seyahat planlaması sunan bir asistan. .NET backend, React arayüz, Docker Compose arkasında PostgreSQL ve Redis.',
+      en: 'A travel assistant, built as a team project. You describe the trip you want in your own words and it plans it: finds the flights and the hotels, puts an itinerary together, and carries you through to booking. The aim is to make planning a trip one conversation instead of a dozen open tabs.',
+      tr: 'Ekip projesi olarak yapılmış bir seyahat asistanı. İstediğin geziyi kendi cümlelerinle anlatıyorsun, o planlıyor: uçuşları ve otelleri buluyor, bir program çıkarıyor ve rezervasyona kadar götürüyor. Amaç, bir geziyi planlamayı onlarca açık sekmeden çıkarıp tek bir konuşmaya indirmek.',
     },
   },
   {
-    slug: 'arduino-projects',
+    slug: 'campusnote',
     year: 2026,
-    repo: 'https://github.com/duuyguyiilmaz/arduino-projects',
-    tags: ['C++', 'Arduino', 'Electronics'],
-    title: 'Arduino Projects',
+    repo: 'https://github.com/duuyguyiilmaz/CampusNote',
+    tags: ['Kotlin', 'Android', 'Firebase', 'Firestore'],
+    logo: '/projects/campusnote.png',
+    /* The app in order: splash, onboarding, sign-in, validation, department
+     * picker, the locked feed, upload, leaderboard. */
+    shots: [
+      '/projects/campusnote-1.webp',
+      '/projects/campusnote-2.webp',
+      '/projects/campusnote-3.webp',
+      '/projects/campusnote-4.webp',
+      '/projects/campusnote-5.webp',
+      '/projects/campusnote-6.webp',
+      '/projects/campusnote-7.webp',
+      '/projects/campusnote-8.webp',
+    ],
+    shape: 'phone',
+    title: 'CampusNote',
+    featured: true,
     summary: {
-      en: 'A growing collection of small embedded-systems experiments: timing, digital I/O and LED driving on an Uno, each one wired and documented from scratch.',
-      tr: 'Küçük gömülü sistem denemelerinden oluşan, büyümeye devam eden bir koleksiyon: Uno üzerinde zamanlama, dijital giriş/çıkış ve LED sürme. Her biri sıfırdan kurulup belgelendi.',
-    },
-  },
-  {
-    slug: 'cse102t-java-practice',
-    year: 2025,
-    repo: 'https://github.com/duuyguyiilmaz/CSE102T-Java-Practice',
-    tags: ['Java', 'OOP'],
-    title: 'Java OOP Practice',
-    summary: {
-      en: 'Object-oriented design exercises written alongside my second Java course: a bus system, a car rental system and a flight reservation system, each modelled with its own class hierarchy.',
-      tr: 'İkinci Java dersim boyunca yazdığım nesne yönelimli tasarım alıştırmaları: otobüs sistemi, araç kiralama sistemi ve uçuş rezervasyon sistemi. Her biri kendi sınıf hiyerarşisiyle modellendi.',
-    },
-  },
-  {
-    slug: 'cse101-java-exercises',
-    year: 2025,
-    repo: 'https://github.com/duuyguyiilmaz/CSE101-Java-Exercises',
-    tags: ['Java', 'Fundamentals'],
-    title: 'Java Fundamentals',
-    summary: {
-      en: 'Where I started: control flow, arrays and string handling, worked through as small programs such as an ATM simulation and a date calculator.',
-      tr: 'Başladığım yer: kontrol yapıları, diziler ve metin işleme. ATM simülasyonu ve tarih hesaplayıcı gibi küçük programlar üzerinden çalışıldı.',
+      en: 'An Android app for sharing lecture notes inside a university department, built on one rule: the feed stays locked until you upload a note of your own. The aim is an archive that keeps growing, because everyone reading from it has also put something into it.',
+      tr: 'Üniversite bölümü içinde ders notu paylaşmak için bir Android uygulaması, tek bir kural üzerine kurulu: kendi notunu yüklemeden akış açılmıyor. Amaç, okuyan herkesin aynı zamanda bir şey koyduğu için büyümeye devam eden bir arşiv.',
     },
   },
 ]

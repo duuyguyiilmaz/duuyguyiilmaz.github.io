@@ -7,6 +7,8 @@
  */
 export { ArrowRight } from '@phosphor-icons/react/dist/icons/ArrowRight'
 export { ArrowUpRight } from '@phosphor-icons/react/dist/icons/ArrowUpRight'
+export { CaretLeft } from '@phosphor-icons/react/dist/icons/CaretLeft'
+export { CaretRight } from '@phosphor-icons/react/dist/icons/CaretRight'
 export { GithubLogo } from '@phosphor-icons/react/dist/icons/GithubLogo'
 export { LinkedinLogo } from '@phosphor-icons/react/dist/icons/LinkedinLogo'
 export { EnvelopeSimple } from '@phosphor-icons/react/dist/icons/EnvelopeSimple'

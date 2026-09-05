@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useLang } from '../lang'
 import { useTheme, type ThemeChoice } from '../theme'
@@ -95,6 +96,52 @@ function LanguageControl() {
 }
 
 /**
+ * The portrait stands in for the wordmark. At this size a face is read faster
+ * than a name, and it costs a fraction of the row - so unlike the wordmark it
+ * stays on at phone widths too.
+ *
+ * 32px is the tallest thing the row already contains (a nav pill is 14px of
+ * text plus its padding), so the plate is as large as it can be without the
+ * bar growing around it.
+ *
+ * On hover it lifts, the way the avatar-group component does, but by 3px
+ * rather than the published 10: this sits inside a 48px bar, and a plate that
+ * jumps out of its own row reads as a glitch. No label - the name is on the
+ * page it leads to, and `aria-label` still says it for a screen reader.
+ *
+ * Until a file is dropped at public/avatar.png the plate holds its place empty
+ * rather than showing a broken-image icon.
+ */
+function Portrait() {
+  const reduced = useReducedMotion()
+  const [ok, setOk] = useState(true)
+
+  return (
+    <motion.a
+      href={`#/${pages[0].id}`}
+      aria-label={person.name}
+      whileHover={reduced ? undefined : { y: -3, scale: 1.18 }}
+      whileTap={{ scale: 0.94 }}
+      transition={springs.press}
+      /* No ring of ours: the artwork draws its own, and two would be a seam. */
+      className="relative size-8 shrink-0 rounded-full bg-fill"
+    >
+      {ok && (
+        <img
+          src="/avatar.png"
+          alt=""
+          width={64}
+          height={64}
+          onError={() => setOk(false)}
+          draggable={false}
+          className="size-full rounded-full object-cover"
+        />
+      )}
+    </motion.a>
+  )
+}
+
+/**
  * A floating pane rather than a bar pinned to the window edge - content passes
  * underneath it, and the ground shifting behind the glass as you scroll is what
  * makes it read as a material.
@@ -108,17 +155,7 @@ export default function Nav({ route }: { route: string }) {
   return (
     <header className="fixed inset-x-0 top-3 z-20 px-3 sm:top-4 sm:px-6">
       <nav className="glass mx-auto flex max-w-3xl items-center justify-between gap-1 rounded-full py-2 pr-1.5 pl-3 sm:gap-3 sm:pr-2 sm:pl-5">
-        {/*
-         * The wordmark is dropped below sm rather than shortened. On a phone the
-         * row has no spare pixels, and "About" already goes to the same place,
-         * so the wordmark is the one item here that repeats another.
-         */}
-        <a
-          href={`#/${pages[0].id}`}
-          className="hidden shrink-0 text-sm font-medium tracking-tight text-label transition-opacity hover:opacity-60 sm:inline"
-        >
-          {person.name}
-        </a>
+        <Portrait />
 
         {/*
          * Fills the gap the wordmark used to leave. Hidden below md: measured at

@@ -49,35 +49,46 @@ export const pages = [
   { id: 'experience', label: { en: 'Experience', tr: 'Deneyim' } },
 ]
 
+/**
+ * Order here is the order down the page, and it also picks the shade: the
+ * first group wears the darkest wine, the last the lightest. Four `tone`
+ * classes are defined in index.css - keep this list to four groups, or add a
+ * `.tone-5` there before adding a fifth here.
+ *
+ * TODO (Duygu): the lists are still short. Adding to `items` is all it takes -
+ * the row wraps on its own.
+ */
 export const skillGroups = [
   {
     title: { en: 'Languages', tr: 'Diller' },
-    items: ['Java', 'Kotlin', 'TypeScript', 'C++', 'SQL'],
+    items: ['Java', 'Kotlin', 'C#', 'TypeScript', 'SQL', 'HTML5', 'CSS3'],
+  },
+  {
+    title: { en: 'Backend & Databases', tr: 'Backend & Veritabanları' },
+    items: ['ASP.NET Core Web API', 'PostgreSQL', 'Redis', 'Firebase'],
   },
   {
     title: { en: 'Mobile & Web', tr: 'Mobil & Web' },
-    items: ['Android SDK', 'Jetpack Compose', 'React', 'Tailwind CSS'],
+    items: ['React', 'Vite', 'Tailwind CSS', 'Android SDK', 'MVVM', 'Kotlin Coroutines'],
   },
   {
-    title: { en: 'Backend & Data', tr: 'Backend & Veri' },
-    items: ['Firebase Auth', 'Cloud Firestore', 'PostgreSQL', 'Redis'],
-  },
-  {
-    title: { en: 'Tools', tr: 'Araçlar' },
-    items: ['Git', 'GitHub Actions', 'Docker', 'Android Studio', 'Linux'],
+    title: { en: 'Tools & Technologies', tr: 'Araçlar & Teknolojiler' },
+    items: [
+      'Git',
+      'GitHub Actions',
+      'Docker',
+      'Gradle',
+      'Swagger/OpenAPI',
+      'Postman',
+      'Vitest',
+      'React Testing Library',
+      'Stripe',
+    ],
   },
 ]
 
 export const ui = {
   projectsCta: { en: 'See projects', tr: 'Projelere bak' },
-  projectsLead: {
-    en: 'Things I have built, most recent first. Each one links to its source.',
-    tr: 'Yaptığım işler, en yenisi başta. Her biri kaynak koduna gidiyor.',
-  },
-  experienceLead: {
-    en: 'Where I have worked and what I did there.',
-    tr: 'Çalıştığım yerler ve orada yaptığım işler.',
-  },
   experienceEmpty: {
     en: 'Nothing to list here yet. The projects page is the fuller picture for now.',
     tr: 'Burada henüz listelenecek bir şey yok. Şimdilik projeler sayfası daha eksiksiz bir resim veriyor.',

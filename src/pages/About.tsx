@@ -2,6 +2,8 @@ import { useLang } from '../lang'
 import { pages, person, skillGroups, ui } from '../data/site'
 import HeroCta from '../components/HeroCta'
 import Reveal from '../components/Reveal'
+import SkillGroupButton from '../components/SkillGroupButton'
+import SkillMarquee from '../components/SkillMarquee'
 
 /*
  * TODO (Duygu): drop a square portrait at src/assets/portrait.jpg, then
@@ -89,6 +91,10 @@ export default function About() {
        * Skills as rows, not cards. Elevation would say these four groups sit
        * above the page, and they do not - a single hairline between them is
        * the whole hierarchy they need.
+       *
+       * The group name wears the hero button's shape in its own shade of the
+       * wine; the skills themselves stay quiet chips, so the eye reads the
+       * four groups first and the contents second.
        */}
       <section className="mt-24 lg:mt-32">
         <h2 className="text-heading text-label">{t(ui.skillsTitle)}</h2>
@@ -98,18 +104,20 @@ export default function About() {
             <Reveal
               key={group.title.en}
               index={index}
-              className="grid gap-3 py-6 sm:grid-cols-[10rem_1fr] sm:gap-8"
+              /*
+               * Each row is its own grid, so `max-content` would size the
+               * first column per row and the skills would start at four
+               * different places. The fixed column is what keeps them in one
+               * line - widen it if a group name ever outgrows it.
+               */
+              className="grid items-center gap-4 py-6 sm:grid-cols-[15rem_1fr] sm:gap-8"
             >
-              <dt className="text-sm font-medium text-label">{t(group.title)}</dt>
-              <dd className="flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full bg-fill px-3 py-1 text-sm text-label-secondary"
-                  >
-                    {item}
-                  </span>
-                ))}
+              <dt>
+                <SkillGroupButton tone={index + 1}>{t(group.title)}</SkillGroupButton>
+              </dt>
+              {/* min-w-0 or the track's own width wins and the grid column stretches. */}
+              <dd className="min-w-0">
+                <SkillMarquee items={group.items} reverse={index % 2 === 1} />
               </dd>
             </Reveal>
           ))}
