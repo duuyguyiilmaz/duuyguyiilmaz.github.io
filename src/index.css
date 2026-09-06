@@ -1,6 +1,22 @@
 @import "tailwindcss";
 
-@import "@fontsource-variable/geist/index.css";
+/*
+ * Poppins is not a variable font, so the weights are pulled one file each and
+ * only the three the site actually sets are here. Adding a fourth means adding
+ * its import - a weight that is not imported silently renders as the nearest
+ * one that is.
+ *
+ * Latin and latin-ext only. The bare `400.css` entry points also carry the
+ * Devanagari subset, which is a 50kB file per weight that this site has no use
+ * for; latin-ext is the one that matters here, since it is where the Turkish
+ * dotless i, the g-breve and the cedillas live.
+ */
+@import "@fontsource/poppins/latin-400.css";
+@import "@fontsource/poppins/latin-500.css";
+@import "@fontsource/poppins/latin-600.css";
+@import "@fontsource/poppins/latin-ext-400.css";
+@import "@fontsource/poppins/latin-ext-500.css";
+@import "@fontsource/poppins/latin-ext-600.css";
 @import "@fontsource-variable/geist-mono/index.css";
 
 /*
@@ -24,7 +40,7 @@
  * the manually chosen case.
  */
 @theme {
-  --font-sans: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
   --color-cream: #f1ece6;
@@ -238,26 +254,35 @@ dd {
   border-radius: 2px;
 }
 
-/* Tracking is size-specific: large text needs it tightened, body sits near zero. */
+/*
+ * Tracking is size-specific: large text needs it tightened, body sits near
+ * zero. Poppins is a geometric face with round, wide letterforms, so it takes
+ * less negative tracking than the grotesk that was here before - past about
+ * -0.02em at display size the o's start to collide.
+ *
+ * Weights are whole steps, not the 550/560 a variable font allowed: Poppins
+ * ships one file per weight, and anything between them is rounded to the
+ * nearest one that is imported at the top of this file.
+ */
 @utility text-display {
   font-size: clamp(2.5rem, 7.5vw, 4.75rem);
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-  font-weight: 560;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 600;
 }
 
 @utility text-title {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
-  line-height: 1.12;
-  letter-spacing: -0.022em;
-  font-weight: 560;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  font-weight: 600;
 }
 
 @utility text-heading {
   font-size: 1.3125rem;
-  line-height: 1.25;
-  letter-spacing: -0.012em;
-  font-weight: 550;
+  line-height: 1.3;
+  letter-spacing: -0.008em;
+  font-weight: 500;
 }
 
 @utility text-body-lg {
