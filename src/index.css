@@ -330,6 +330,29 @@ dd {
 }
 
 /*
+ * The "Source" link on a project card. It wears the tag chips' translucent
+ * pill shape so it reads as part of the same row, one size up and with a
+ * visible edge - as a bare accent-coloured line it disappeared next to the
+ * tags, which is the whole reason it is a pill now.
+ *
+ * Solid pink fill, white text, in both themes. The pink is the step of the
+ * ramp that still clears 5:1 against white - the lighter pinks read better as
+ * a colour but drop the label to around 3:1, which is under AA for text this
+ * size. Hover deepens the fill rather than moving the pill, so it stays put
+ * inside the card's own hover.
+ */
+@utility source-pill {
+  background-color: #a05a63;
+  border: 1px solid #a05a63;
+  color: #ffffff;
+}
+
+.source-pill:hover {
+  background-color: #8c4f56;
+  border-color: #8c4f56;
+}
+
+/*
  * Marquee. The track holds the same list twice, so translating it by exactly
  * half its width lands copy two where copy one started and the loop has no
  * seam. Each copy carries its own trailing gap (the `pr` on the group) rather

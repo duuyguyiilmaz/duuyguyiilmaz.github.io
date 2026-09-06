@@ -58,7 +58,7 @@ export const pages = [
 export const skillGroups = [
   {
     title: { en: 'Languages', tr: 'Diller' },
-    items: ['Java', 'Kotlin', 'C#', 'TypeScript', 'SQL', 'HTML5', 'CSS3'],
+    items: ['Java', 'Kotlin', 'TypeScript', 'SQL'],
   },
   {
     title: { en: 'Backend & Databases', tr: 'Backend & Veritabanları' },
@@ -66,7 +66,7 @@ export const skillGroups = [
   },
   {
     title: { en: 'Mobile & Web', tr: 'Mobil & Web' },
-    items: ['React', 'Vite', 'Tailwind CSS', 'Android SDK', 'MVVM', 'Kotlin Coroutines'],
+    items: ['React', 'Vite', 'Tailwind CSS', 'Android SDK'],
   },
   {
     title: { en: 'Tools & Technologies', tr: 'Araçlar & Teknolojiler' },
@@ -78,7 +78,6 @@ export const skillGroups = [
       'Swagger/OpenAPI',
       'Postman',
       'Vitest',
-      'React Testing Library',
       'Stripe',
     ],
   },

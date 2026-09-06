@@ -83,10 +83,17 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {/*
            * Tags and the link share one line rather than stacking into two: on
            * its own row the link was a third of the card's height for four
-           * words. It wraps under the tags when the row runs out of room.
+           * words.
+           *
+           * The row itself never wraps - the pill is `shrink-0` and holds the
+           * right edge, and it is the tag list that runs onto a second line
+           * when it runs out of room. Letting the row wrap instead dropped the
+           * pill below the tags on the card with five of them and kept it
+           * inline on the card with four, so the same link sat in two
+           * different places down the page.
            */}
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-            <ul className="flex flex-wrap gap-2">
+          <div className="mt-6 flex items-center justify-between gap-x-6">
+            <ul className="flex min-w-0 flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <li
                   key={tag}
@@ -101,11 +108,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.repo}
               target="_blank"
               rel="noreferrer"
-              className="group/link flex items-center gap-1.5 rounded-sm text-sm font-medium text-accent outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="source-pill group/link flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-base font-semibold whitespace-nowrap outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
             >
               {t(ui.viewSource)}
               <ArrowUpRight
-                size={15}
+                size={17}
                 weight={ICON_WEIGHT}
                 className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
               />
